@@ -26,11 +26,11 @@ namespace Finally
         {
             try
             {
-                Console.Write("제수를 입력하세요. :");
+                Console.Write("피제수를 입력하세요. :");
                 String temp = Console.ReadLine();
                 int divisor = Convert.ToInt32(temp);
 
-                Console.Write("피제수를 입력하세요. : ");
+                Console.Write("제수를 입력하세요. : ");
                 temp = Console.ReadLine();
                 int dividend = Convert.ToInt32(temp);
 
