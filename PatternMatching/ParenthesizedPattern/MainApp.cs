@@ -10,3 +10,4 @@
                 Console.WriteLine("Major");
         }
     }
+}

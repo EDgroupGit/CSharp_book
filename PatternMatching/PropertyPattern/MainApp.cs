@@ -10,7 +10,7 @@
 
         static string GetNickname(Car car)
         {
-            Func<Car, string, string> GenerateMessage = (car, nickname) => 
+            var GenerateMessage = (Car car, string nickname) => 
                 $"{car.Model} produced in {car.ProducedAt.Year} is {nickname}";
 
             if (car is Car { Model:"Mustang", ProducedAt.Year: 1967 }) 

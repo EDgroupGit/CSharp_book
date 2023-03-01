@@ -14,7 +14,7 @@
                 => 0.0,
             OrderItem { Amount: >= 100 } and OrderItem { Price: >= 10_000 }
                 => orderItem.Amount * orderItem.Price * 0.8,
-            OrderItem { Amount: >= 100 }
+            not OrderItem { Amount: < 100 }
                 => orderItem.Amount * orderItem.Price * 0.9,
             _ => orderItem.Amount * orderItem.Price,
         };

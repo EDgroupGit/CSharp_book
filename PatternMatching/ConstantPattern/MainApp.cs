@@ -6,7 +6,7 @@ namespace ConstantPattern
     {
         static void Main(string[] args)
         {
-            Func<string, int> GetCountryCode = (nation) => nation switch
+            var GetCountryCode = (string nation) => nation switch
             {
                 "KR" => 82,
                 "US" => 1,

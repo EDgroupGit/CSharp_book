@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <Reference Include="FUP">
-      <HintPath>..\FUP\bin\Debug\net5.0\FUP.dll</HintPath>
+      <HintPath>..\FUP\bin\Debug\net7.0\FUP.dll</HintPath>
     </Reference>
   </ItemGroup>
 

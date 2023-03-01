@@ -18,11 +18,11 @@ namespace Switch2
 
             switch (obj)
             {
-                case int i:
-                    Console.WriteLine($"{i}는 int 형식입니다.");
+                case int:
+                    Console.WriteLine($"{(int)obj}는 int 형식입니다.");
                     break;
-                case float f:
-                    Console.WriteLine($"{f}는 float 형식입니다.");
+                case float:
+                    Console.WriteLine($"{(float)obj}는 float 형식입니다.");
                     break;
                 default:
                     Console.Write($"{obj}(은)는 모르는 형식입니다.");                    
