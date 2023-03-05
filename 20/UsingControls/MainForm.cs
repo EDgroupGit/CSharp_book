@@ -102,7 +102,7 @@ namespace UsingControls
         {
             lvDummy.Items.Add(
                     new ListViewItem(
-                        new string[] { Node.Text, 
+                        new string[] { Node.Text,
                             Node.FullPath.Count(f => f == '\\').ToString() }));
 
             foreach (TreeNode node in Node.Nodes)

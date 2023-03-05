@@ -1,42 +1,48 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 namespace Serialization
 {
-    [Serializable]
     class NameCard
     {
-        public string Name;
-        public string Phone;
-        public int Age;
+        public string Name {get;set;}
+        public string Phone {get;set;}
+        public int Age {get;set;}
     }
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            using (Stream ws = new FileStream("a.dat", FileMode.Create))
+            var fileName = "a.json";
+
+            using (Stream ws = new FileStream(fileName, FileMode.Create))
             {
-                BinaryFormatter serializer = new BinaryFormatter();
-
-                NameCard nc = new NameCard();
-                nc.Name = "박상현";
-                nc.Phone = "010-123-4567";
-                nc.Age = 33;
-
-                serializer.Serialize(ws, nc);
-            }
+                NameCard nc = new NameCard()
+                {
+                    Name = "박상현",
+                    Phone = "010-123-4567",
+                    Age = 33
+                };
                 
-            using Stream rs = new FileStream("a.dat", FileMode.Open);
-            BinaryFormatter deserializer = new BinaryFormatter();
+                string jsonString = JsonSerializer.Serialize<NameCard>(nc);
+                byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
+                ws.Write(jsonBytes, 0, jsonBytes.Length);
+            }
 
-            NameCard nc2;
-            nc2 = (NameCard)deserializer.Deserialize(rs);
-            
-            Console.WriteLine($"Name:  {nc2.Name}");
-            Console.WriteLine($"Phone: {nc2.Phone}");
-            Console.WriteLine($"Age:   {nc2.Age}");
+            using (Stream rs = new FileStream(fileName, FileMode.Open))
+            {
+                byte[] jsonBytes = new byte[rs.Length];
+                rs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = System.Text.Encoding.UTF8.GetString(jsonBytes);
+                
+                NameCard nc2 = JsonSerializer.Deserialize<NameCard>(jsonString);
+
+                Console.WriteLine($"Name:  {nc2.Name}");
+                Console.WriteLine($"Phone: {nc2.Phone}");
+                Console.WriteLine($"Age:   {nc2.Age}");
+            }
         }
     }
 }

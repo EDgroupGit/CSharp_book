@@ -1,51 +1,48 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Collections.Generic;
+using System.Text.Json;
 
-namespace SerializingCollection
+namespace Serialization
 {
-    [Serializable]
     class NameCard
     {
-        public NameCard(string Name, string Phone, int Age)
-        {
-            this.Name = Name;
-            this.Phone = Phone;
-            this.Age = Age;
-        }
-
-        public string Name;
-        public string Phone;
-        public int Age;
+        public string Name {get;set;}
+        public string Phone {get;set;}
+        public int Age {get;set;}
     }
 
     class MainApp
     {
         static void Main(string[] args)
         {
-            using (Stream ws = new FileStream("a.dat", FileMode.Create))
-            { 
-                BinaryFormatter serializer = new BinaryFormatter();
+            var fileName = "a.json";
 
-                List<NameCard> list = new List<NameCard>();
-                list.Add(new NameCard("박상현", "010-123-4567", 33));
-                list.Add(new NameCard("김연아", "010-323-1111", 22));
-                list.Add(new NameCard("장미란", "010-555-5555", 26));
-
-                serializer.Serialize(ws, list);
+            using (Stream ws = new FileStream(fileName, FileMode.Create))
+            {
+                var list = new List<NameCard>();
+                list.Add(new NameCard(){Name="박상현", Phone="010-123-4567", Age=33});
+                list.Add(new NameCard(){Name="김연아", Phone="010-323-1111", Age=22});
+                list.Add(new NameCard(){Name="장미란", Phone="010-555-5555", Age=26});
+                
+                string jsonString = JsonSerializer.Serialize<List<NameCard>>(list);
+                byte[] jsonBytes = System.Text.Encoding.UTF8.GetBytes(jsonString);
+                ws.Write(jsonBytes, 0, jsonBytes.Length);
             }
 
-            using Stream rs = new FileStream("a.dat", FileMode.Open);
-            BinaryFormatter deserializer = new BinaryFormatter();
-
-            List<NameCard> list2;
-            list2 = (List<NameCard>)deserializer.Deserialize(rs);
-            
-            foreach (NameCard nc in list2)
+            using (Stream rs = new FileStream(fileName, FileMode.Open))
             {
-                Console.WriteLine(
-                    $"Name: {nc.Name}, Phone: {nc.Phone}, Age: {nc.Age}");
+                byte[] jsonBytes = new byte[rs.Length];
+                rs.Read(jsonBytes, 0, jsonBytes.Length);
+                string jsonString = System.Text.Encoding.UTF8.GetString(jsonBytes);
+                
+                var list2 = JsonSerializer.Deserialize<List<NameCard>>(jsonString);
+
+                foreach (NameCard nc in list2)
+                {
+                    Console.WriteLine(
+                        $"Name: {nc.Name}, Phone: {nc.Phone}, Age: {nc.Age}");
+                }
             }
         }
     }
