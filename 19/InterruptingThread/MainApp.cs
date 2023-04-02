@@ -18,7 +18,7 @@ namespace InterruptingThread
             try
             {
                 Console.WriteLine("Running thread isn't gonna be interrupted");
-                Thread.SpinWait(1000000000);
+                Thread.Sleep(100);
 
                 while (count > 0)
                 {
