@@ -1,5 +1,3 @@
-# ThisisCSharp11
-
 # 개요(Abstract)
 <이것이 C#이다 3E> 예제 코드 파일
 <This is C# 3E> code sample files 
